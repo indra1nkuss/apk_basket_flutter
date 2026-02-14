@@ -23,7 +23,10 @@ class GameScreen extends StatefulWidget {
   State<GameScreen> createState() => _GameScreenState();
 }
 
-class _GameScreenState extends State<GameScreen> {
+  class _GameScreenState extends State<GameScreen> {
+  
+  final ValueNotifier<int> counter = ValueNotifier(1);
+  
   @override
   void initState() {
     super.initState();
@@ -44,16 +47,23 @@ Widget build(BuildContext context) {
               color: Colors.black54,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Text(
-              'Score: 1',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+            // GANTI TEXT LAMA DENGAN INI:
+              child: ValueListenableBuilder<int>(
+                valueListenable: counter,
+                builder: (context, score, child) {
+                  return Text(
+                    'Score: $score',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                },
               ),
+              
             ),
-          ), // <-- Container ditutup di sini
-        ), // <-- Positioned ditutup di sini
+          ),
        Positioned(
             top: 50,
             right: 20,
