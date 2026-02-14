@@ -33,10 +33,13 @@ class GameScreen extends StatefulWidget {
     
   }
 
-  @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    body: Column(
+   @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // ==========================================
+      // COLUMN: Stack di atas, Button di bawah
+      // ==========================================
+      body: Column(
         children: [
           // ==========================================
           // BAGIAN ATAS: Game Area (Expanded + Stack)
@@ -70,29 +73,35 @@ Widget build(BuildContext context) {
                   ),
                 ),
 
-       Positioned(
-            top: 50,
-            right: 20,
-            child: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.music_note, color: Colors.black),
-                  onPressed: () {
-                    // Aksi untuk musik
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.volume_up, color: Colors.black),
-                  onPressed: () {
-                  }
-                  ),
+                // Icon di kanan atas
+                Positioned(
+                  top: 50,
+                  right: 20,
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.music_note, color: Colors.black),
+                        onPressed: () {
+                          // Aksi untuk musik
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.volume_up, color: Colors.black),
+                        onPressed: () {
+                          // Aksi untuk volume
+                        },
+                      ),
                     ],
                   ),
                 ),
               ],
             ),
           ),
-            Padding(
+
+          // ==========================================
+          // BAGIAN BAWAH: Tombol Tambah Score
+          // ==========================================
+          Padding(
             padding: const EdgeInsets.all(16),
             child: ElevatedButton(
               onPressed: () {
@@ -101,7 +110,6 @@ Widget build(BuildContext context) {
               child: const Text("Tambah Score"),
             ),
           ),
-          
         ],
       ),
     );
