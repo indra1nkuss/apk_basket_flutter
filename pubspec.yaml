@@ -8,15 +8,14 @@ environment:
   sdk: ^3.9.2
 
 dependencies:
-  flutter:
-    sdk: flutter
+├── flutter:          
+│   └── sdk: flutter  
+
+└── flame: ^1.17.0    
   
-  # Game engine & audio
-  flame: ^1.16.0
-  flame_audio: ^2.1.6
   
   # UI
-  cupertino_icons: ^1.0.8
+cupertino_icons: ^1.0.8
 
 dev_dependencies:
   flutter_test:
