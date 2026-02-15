@@ -30,12 +30,4 @@ class FruitCatcherGame extends FlameGame {
   Future<void> onLoad() async {
     await super.onLoad();
   }
-
-  // ==========================================
-  // Method untuk tambah score
-  // ==========================================
-  void addScore(int points) {
-    _score += points;
-    onScoreChanged?.call(_score);
-  }
 }
