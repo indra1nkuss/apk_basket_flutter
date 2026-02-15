@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
-import 'game/fruit_catcher_game.dart';
+import 'game/components/fruit_catcher_game.dart';  // ✅ Path sudah benar
 
 void main() {
   runApp(const MyApp());
