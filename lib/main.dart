@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flame/game.dart';
+import 'game/fruit_catcher_game.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});  
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Fruit Catcher Game',
-      home: GameScreen(), 
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.orange,
+      ),
+      home: const GameScreen(),
     );
   }
 }
@@ -23,31 +29,51 @@ class GameScreen extends StatefulWidget {
   State<GameScreen> createState() => _GameScreenState();
 }
 
-  class _GameScreenState extends State<GameScreen> {
+class _GameScreenState extends State<GameScreen> {
+  // ==========================================
+  // UPDATE: Deklarasi game dengan late
+  // ==========================================
+  late FruitCatcherGame game;
   
-  final ValueNotifier<int> counter = ValueNotifier(1);
+  final ValueNotifier<int> counter = ValueNotifier<int>(0);
 
+  // ==========================================
+  // UPDATE: Inisialisasi game di initState
+  // ==========================================
   @override
   void initState() {
     super.initState();
     
+    // Inisialisasi game dengan callback untuk update score
+    game = FruitCatcherGame(
+      onScoreChanged: (newScore) {
+        counter.value = newScore;
+      },
+    );
   }
 
-   @override
+  @override
+  void dispose() {
+    // Bersihkan resources
+    counter.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // ==========================================
-      // COLUMN: Stack di atas, Button di bawah
-      // ==========================================
       body: Column(
         children: [
           // ==========================================
-          // BAGIAN ATAS: Game Area (Expanded + Stack)
+          // GAME AREA (Expanded + Stack)
           // ==========================================
           Expanded(
             child: Stack(
               children: [
-                // Score di kiri atas
+                // LAYER 1: Flame Game (Background/Board)
+                GameWidget(game: game),
+
+                // LAYER 2: Score (Positioned kiri atas)
                 Positioned(
                   top: 50,
                   left: 20,
@@ -73,22 +99,22 @@ class GameScreen extends StatefulWidget {
                   ),
                 ),
 
-                // Icon di kanan atas
+                // LAYER 3: Control (Positioned kanan atas)
                 Positioned(
                   top: 50,
                   right: 20,
                   child: Row(
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.music_note, color: Colors.black),
+                        icon: const Icon(Icons.music_note, color: Colors.white),
                         onPressed: () {
-                          // Aksi untuk musik
+                          // Toggle musik
                         },
                       ),
                       IconButton(
-                        icon: const Icon(Icons.volume_up, color: Colors.black),
+                        icon: const Icon(Icons.volume_up, color: Colors.white),
                         onPressed: () {
-                          // Aksi untuk volume
+                          // Toggle sound
                         },
                       ),
                     ],
@@ -99,15 +125,42 @@ class GameScreen extends StatefulWidget {
           ),
 
           // ==========================================
-          // BAGIAN BAWAH: Tombol Tambah Score
+          // CONTROL BUTTONS (Di bawah game)
           // ==========================================
-          Padding(
+          Container(
+            color: Colors.grey[200],
             padding: const EdgeInsets.all(16),
-            child: ElevatedButton(
-              onPressed: () {
-                counter.value++;
-              },
-              child: const Text("Tambah Score"),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                // Tombol Kiri
+                ElevatedButton(
+                  onPressed: () {
+                    // Aksi gerak kiri
+                  },
+                  child: const Icon(Icons.arrow_left),
+                ),
+                
+                // Tombol Pause/Play
+                ElevatedButton(
+                  onPressed: () {
+                    if (game.paused) {
+                      game.resumeEngine();
+                    } else {
+                      game.pauseEngine();
+                    }
+                  },
+                  child: Icon(game.paused ? Icons.play_arrow : Icons.pause),
+                ),
+                
+                // Tombol Kanan
+                ElevatedButton(
+                  onPressed: () {
+                    // Aksi gerak kanan
+                  },
+                  child: const Icon(Icons.arrow_right),
+                ),
+              ],
             ),
           ),
         ],
