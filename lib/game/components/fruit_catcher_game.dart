@@ -3,20 +3,25 @@ import 'package:flutter/material.dart';
 
 class FruitCatcherGame extends FlameGame {
   // ==========================================
-  // Background color (Flame 1.17+ pakai cara ini)
+  // Background color - Override METHOD (bukan getter)
   // ==========================================
-  FruitCatcherGame() {
-    // Set background color di constructor
-    camera.viewfinder.backgroundColor = const Color(0xFF87CEEB);
-  }
+  @override
+  Color backgroundColor() => const Color(0xFF87CEEB); // sky blue
 
   // ==========================================
   // Score management
   // ==========================================
-  late final int _score = 0;  // Tambah late final
+  int _score = 0;
   int get score => _score;
   
   final Function(int)? onScoreChanged;
+  
+  // Flag untuk pause state
+  bool _isPaused = false;
+  bool get isPaused => _isPaused;
+
+  // Constructor
+  FruitCatcherGame({this.onScoreChanged});
 
   // ==========================================
   // Load game
@@ -24,6 +29,13 @@ class FruitCatcherGame extends FlameGame {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
- 
+  }
+
+  // ==========================================
+  // Method untuk tambah score
+  // ==========================================
+  void addScore(int points) {
+    _score += points;
+    onScoreChanged?.call(_score);
   }
 }

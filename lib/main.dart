@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
-import 'game/components/fruit_catcher_game.dart';  // ✅ Path sudah benar
+import 'game/components/fruit_catcher_game.dart';  // Sesuaikan path jika perlu
 
 void main() {
   runApp(const MyApp());
@@ -31,20 +31,16 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen> {
   // ==========================================
-  // UPDATE: Deklarasi game dengan late
+  // Inisialisasi game
   // ==========================================
   late FruitCatcherGame game;
-  
   final ValueNotifier<int> counter = ValueNotifier<int>(0);
+  bool isPaused = false;  // ← TAMBAH: flag untuk pause state
 
-  // ==========================================
-  // UPDATE: Inisialisasi game di initState
-  // ==========================================
   @override
   void initState() {
     super.initState();
     
-    // Inisialisasi game dengan callback untuk update score
     game = FruitCatcherGame(
       onScoreChanged: (newScore) {
         counter.value = newScore;
@@ -54,7 +50,6 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   void dispose() {
-    // Bersihkan resources
     counter.dispose();
     super.dispose();
   }
@@ -141,16 +136,20 @@ class _GameScreenState extends State<GameScreen> {
                   child: const Icon(Icons.arrow_left),
                 ),
                 
-                // Tombol Pause/Play
+                // Tombol Pause/Play - SUDAH DIPERBAIKI
                 ElevatedButton(
                   onPressed: () {
-                    if (game.paused) {
-                      game.resumeEngine();
-                    } else {
-                      game.pauseEngine();
-                    }
+                    setState(() {
+                      if (isPaused) {
+                        game.resumeEngine();
+                        isPaused = false;
+                      } else {
+                        game.pauseEngine();
+                        isPaused = true;
+                      }
+                    });
                   },
-                  child: Icon(game.paused ? Icons.play_arrow : Icons.pause),
+                  child: Icon(isPaused ? Icons.play_arrow : Icons.pause),
                 ),
                 
                 // Tombol Kanan
