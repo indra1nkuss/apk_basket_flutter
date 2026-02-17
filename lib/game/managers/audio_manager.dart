@@ -1,4 +1,5 @@
 import 'package:flame_audio/flame_audio.dart';
+import 'package:flutter/foundation.dart';  // Tambah ini untuk debugPrint
 
 class AudioManager {
   // ==========================================
@@ -35,9 +36,9 @@ class AudioManager {
         'sfx/explosion.mp3',
         'sfx/jump.mp3',
       ]);
-      print('Audio initialized successfully');
+      debugPrint('Audio initialized successfully');  // Ganti print
     } catch (e) {
-      print('Error initializing audio: $e');
+      debugPrint('Error initializing audio: $e');    // Ganti print
     }
   }
 
@@ -49,7 +50,7 @@ class AudioManager {
       try {
         FlameAudio.bgm.play('music/background_music.mp3', volume: _musicVolume);
       } catch (e) {
-        print('Error playing background music: $e');
+        debugPrint('Error playing background music: $e');  // Ganti print
       }
     }
   }
@@ -58,7 +59,7 @@ class AudioManager {
     try {
       FlameAudio.bgm.stop();
     } catch (e) {
-      print('Error stopping background music: $e');
+      debugPrint('Error stopping background music: $e');  // Ganti print
     }
   }
 
@@ -66,7 +67,7 @@ class AudioManager {
     try {
       FlameAudio.bgm.pause();
     } catch (e) {
-      print('Error pausing background music: $e');
+      debugPrint('Error pausing background music: $e');  // Ganti print
     }
   }
 
@@ -75,7 +76,7 @@ class AudioManager {
       try {
         FlameAudio.bgm.resume();
       } catch (e) {
-        print('Error resuming background music: $e');
+        debugPrint('Error resuming background music: $e');  // Ganti print
       }
     }
   }
@@ -87,8 +88,9 @@ class AudioManager {
     if (_isSfxEnabled) {
       try {
         FlameAudio.play('sfx/$fileName', volume: _sfxVolume);
+        debugPrint('Playing SFX: $fileName');  // Ganti print
       } catch (e) {
-        print('Error playing SFX: $e');
+        debugPrint('Error playing SFX: $e');    // Ganti print
       }
     }
   }
@@ -99,7 +101,7 @@ class AudioManager {
         final adjustedVolume = (volume * _sfxVolume).clamp(0.0, 1.0);
         FlameAudio.play('sfx/$fileName', volume: adjustedVolume);
       } catch (e) {
-        print('Error playing SFX with volume: $e');
+        debugPrint('Error playing SFX with volume: $e');  // Ganti print
       }
     }
   }
@@ -112,7 +114,7 @@ class AudioManager {
     try {
       FlameAudio.bgm.audioPlayer.setVolume(_musicVolume);
     } catch (e) {
-      print('Error setting music volume: $e');
+      debugPrint('Error setting music volume: $e');  // Ganti print
     }
   }
 
@@ -165,7 +167,7 @@ class AudioManager {
     try {
       FlameAudio.bgm.dispose();
     } catch (e) {
-      print('Error disposing audio: $e');
+      debugPrint('Error disposing audio: $e');  // Ganti print
     }
   }
 }
