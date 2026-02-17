@@ -23,6 +23,7 @@ flutter:
   uses-material-design: true
   
   assets:
+    - assets/audio/music/background_music.mp3
     - assets/audio/sfx/collect.mp3
     - assets/audio/sfx/explosion.mp3
     - assets/audio/sfx/jump.mp3
