@@ -110,3 +110,44 @@ class AudioManager {
   void setSfxVolume(double volume) {
     _sfxVolume = volume.clamp(0.0, 1.0);
   }
+
+    /// Toggle music on/off
+  void toggleMusic() {
+    _isMusicEnabled = !_isMusicEnabled;
+    if (_isMusicEnabled) {
+      resumeBackgroundMusic();
+    } else {
+      pauseBackgroundMusic();
+    }
+  }
+
+  /// Toggle sound effects on/off
+  void toggleSfx() {
+    _isSfxEnabled = !_isSfxEnabled;
+  }
+
+  /// Enable music
+  void enableMusic() {
+    if (!_isMusicEnabled) {
+      _isMusicEnabled = true;
+      resumeBackgroundMusic();
+    }
+  }
+
+  /// Disable music
+  void disableMusic() {
+    if (_isMusicEnabled) {
+      _isMusicEnabled = false;
+      pauseBackgroundMusic();
+    }
+  }
+
+  /// Enable sound effects
+  void enableSfx() {
+    _isSfxEnabled = true;
+  }
+
+  /// Disable sound effects
+  void disableSfx() {
+    _isSfxEnabled = false;
+  }
