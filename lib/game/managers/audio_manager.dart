@@ -33,3 +33,42 @@ class AudioManager {
       print('Error initializing audio: $e');
     }
   }
+     /// Play background music
+  void playBackgroundMusic() {
+    if (_isMusicEnabled) {
+      try {
+        FlameAudio.bgm.play('music/background_music.mp3', volume: _musicVolume);
+      } catch (e) {
+        print('Error playing background music: $e');
+      }
+    }
+  }
+
+  /// Stop background music
+  void stopBackgroundMusic() {
+    try {
+      FlameAudio.bgm.stop();
+    } catch (e) {
+      print('Error stopping background music: $e');
+    }
+  }
+
+  /// Pause background music
+  void pauseBackgroundMusic() {
+    try {
+      FlameAudio.bgm.pause();
+    } catch (e) {
+      print('Error pausing background music: $e');
+    }
+  }
+
+  /// Resume background music
+  void resumeBackgroundMusic() {
+    if (_isMusicEnabled) {
+      try {
+        FlameAudio.bgm.resume();
+      } catch (e) {
+        print('Error resuming background music: $e');
+      }
+    }
+  }
