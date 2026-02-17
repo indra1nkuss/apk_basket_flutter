@@ -43,15 +43,10 @@ class _GameScreenState extends State<GameScreen> {
   late FruitCatcherGame game;
   final ValueNotifier<int> counter = ValueNotifier<int>(0);
 
-  @override
+ @override
   void initState() {
     super.initState();
-    
-    game = FruitCatcherGame(
-      onScoreChanged: (newScore) {
-        counter.value = newScore;
-      },
-    );
+    game = FruitCatcherGame();  
   }
 
   @override

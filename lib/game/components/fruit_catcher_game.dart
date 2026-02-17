@@ -1,33 +1,16 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import '../managers/audio_manager.dart';  // ✅ Perbaiki path
 
 class FruitCatcherGame extends FlameGame {
-  // ==========================================
-  // Background color - Override METHOD (bukan getter)
-  // ==========================================
   @override
-  Color backgroundColor() => const Color(0xFF87CEEB); // sky blue
+  Color backgroundColor() => const Color(0xFF87CEEB);
 
-  // ==========================================
-  // Score management
-  // ==========================================
-  int _score = 0;
-  int get score => _score;
-  
-  final Function(int)? onScoreChanged;
-  
-  // Flag untuk pause state
-  bool _isPaused = false;
-  bool get isPaused => _isPaused;
+  final ValueNotifier<int> scoreNotifier = ValueNotifier<int>(0);
 
-  // Constructor
-  FruitCatcherGame({this.onScoreChanged});
-
-  // ==========================================
-  // Load game
-  // ==========================================
   @override
   Future<void> onLoad() async {
     await super.onLoad();
+    AudioManager().playBackgroundMusic();
   }
 }
