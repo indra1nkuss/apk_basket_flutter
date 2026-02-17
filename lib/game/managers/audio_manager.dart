@@ -1,27 +1,34 @@
 import 'package:flame_audio/flame_audio.dart';
 
 class AudioManager {
+  // ==========================================
   // Singleton pattern
+  // ==========================================
   static final AudioManager _instance = AudioManager._internal();
   factory AudioManager() => _instance;
   AudioManager._internal();
 
+  // ==========================================
   // State variables
+  // ==========================================
   bool _isMusicEnabled = true;
   bool _isSfxEnabled = true;
   double _musicVolume = 0.7;
   double _sfxVolume = 1.0;
 
+  // ==========================================
   // Getters
+  // ==========================================
   bool get isMusicEnabled => _isMusicEnabled;
   bool get isSfxEnabled => _isSfxEnabled;
   double get musicVolume => _musicVolume;
   double get sfxVolume => _sfxVolume;
-}
-  /// Initialize audio system - preload all audio files
+
+  // ==========================================
+  // Initialize
+  // ==========================================
   Future<void> initialize() async {
     try {
-      // Preload all sound effects
       await FlameAudio.audioCache.loadAll([
         'music/background_music.mp3',
         'sfx/collect.mp3',
@@ -33,7 +40,10 @@ class AudioManager {
       print('Error initializing audio: $e');
     }
   }
-     /// Play background music
+
+  // ==========================================
+  // Background Music
+  // ==========================================
   void playBackgroundMusic() {
     if (_isMusicEnabled) {
       try {
@@ -44,7 +54,6 @@ class AudioManager {
     }
   }
 
-  /// Stop background music
   void stopBackgroundMusic() {
     try {
       FlameAudio.bgm.stop();
@@ -53,7 +62,6 @@ class AudioManager {
     }
   }
 
-  /// Pause background music
   void pauseBackgroundMusic() {
     try {
       FlameAudio.bgm.pause();
@@ -62,7 +70,6 @@ class AudioManager {
     }
   }
 
-  /// Resume background music
   void resumeBackgroundMusic() {
     if (_isMusicEnabled) {
       try {
@@ -73,7 +80,9 @@ class AudioManager {
     }
   }
 
-    /// Play sound effect
+  // ==========================================
+  // Sound Effects
+  // ==========================================
   void playSfx(String fileName) {
     if (_isSfxEnabled) {
       try {
@@ -84,7 +93,6 @@ class AudioManager {
     }
   }
 
-  /// Play sound effect with custom volume
   void playSfxWithVolume(String fileName, double volume) {
     if (_isSfxEnabled) {
       try {
@@ -96,7 +104,9 @@ class AudioManager {
     }
   }
 
-    /// Set music volume (0.0 - 1.0)
+  // ==========================================
+  // Volume Control
+  // ==========================================
   void setMusicVolume(double volume) {
     _musicVolume = volume.clamp(0.0, 1.0);
     try {
@@ -106,12 +116,13 @@ class AudioManager {
     }
   }
 
-  /// Set sound effects volume (0.0 - 1.0)
   void setSfxVolume(double volume) {
     _sfxVolume = volume.clamp(0.0, 1.0);
   }
 
-    /// Toggle music on/off
+  // ==========================================
+  // Toggle & Enable/Disable
+  // ==========================================
   void toggleMusic() {
     _isMusicEnabled = !_isMusicEnabled;
     if (_isMusicEnabled) {
@@ -121,12 +132,10 @@ class AudioManager {
     }
   }
 
-  /// Toggle sound effects on/off
   void toggleSfx() {
     _isSfxEnabled = !_isSfxEnabled;
   }
 
-  /// Enable music
   void enableMusic() {
     if (!_isMusicEnabled) {
       _isMusicEnabled = true;
@@ -134,7 +143,6 @@ class AudioManager {
     }
   }
 
-  /// Disable music
   void disableMusic() {
     if (_isMusicEnabled) {
       _isMusicEnabled = false;
@@ -142,16 +150,17 @@ class AudioManager {
     }
   }
 
-  /// Enable sound effects
   void enableSfx() {
     _isSfxEnabled = true;
   }
 
-  /// Disable sound effects
   void disableSfx() {
     _isSfxEnabled = false;
   }
-    /// Cleanup and dispose audio resources
+
+  // ==========================================
+  // Cleanup
+  // ==========================================
   void dispose() {
     try {
       FlameAudio.bgm.dispose();
@@ -159,3 +168,4 @@ class AudioManager {
       print('Error disposing audio: $e');
     }
   }
+}
